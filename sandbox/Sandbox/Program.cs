@@ -11,7 +11,7 @@ namespace game
 
             Console.WriteLine("What is your favorite color? ");
             string color = Console.ReadLine();
-            Console.WriteLine($"Your color is {color}");
+            Console.WriteLine($"Your favorite color is {color}");
         }
     }
 }
