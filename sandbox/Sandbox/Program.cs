@@ -1,58 +1,144 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 
-// Abstract class defining the structure for user interactions
-public abstract class UserInteraction
+abstract class JournalEntry
 {
-    public abstract void DisplayWelcomeMessage();
-    public abstract string PromptUserName();
-    public abstract int PromptUserNumber();
-    public abstract void DisplayResult(string name, int square);
+    public string Prompt { get; set; }
+    public string Response { get; set; }
+    public string Date { get; set; }
+
+    public JournalEntry(string prompt, string response)
+    {
+        Prompt = prompt;
+        Response = response;
+        Date = DateTime.Now.ToString("yyyy-MM-dd");
+    }
+
+    public abstract override string ToString();
 }
 
-// Concrete implementation of UserInteraction
-public class ConsoleUserInteraction : UserInteraction
+class Entry : JournalEntry
 {
-    public override void DisplayWelcomeMessage()
+    public Entry(string prompt, string response) : base(prompt, response) { }
+
+    public override string ToString()
     {
-        Console.WriteLine("Welcome to the program!");
+        return $"{Date} | {Prompt} | {Response}";
+    }
+}
+
+class Journal
+{
+    public List<JournalEntry> Entries { get; private set; }
+    public List<string> Prompts { get; private set; }
+
+    public Journal()
+    {
+        Entries = new List<JournalEntry>();
+        Prompts = new List<string>
+        {
+            "Who was the most interesting person I interacted with today?",
+            "What was the best part of my day?",
+            "How did I see the hand of the Lord in my life today?",
+            "What was the strongest emotion I felt today?",
+            "If I had one thing I could do over today, what would it be?",
+            "Did you meet someone new today? How was that experience?",
+            "What did you study in the scriptures today?",
+            "How did it feel when your code finally successfully pushed to GitHub?",
+            "How was the weather today?",
+            "What did you eat for lunch/dinner today?"
+        };
     }
 
-    public override string PromptUserName()
+    public void AddEntry(JournalEntry entry)
     {
-        Console.Write("Please enter your name: ");
-        return Console.ReadLine();
+        Entries.Add(entry);
     }
 
-    public override int PromptUserNumber()
+    public void DisplayEntries()
     {
-        Console.Write("Please enter your favorite number: ");
-        return int.Parse(Console.ReadLine());
+        foreach (var entry in Entries)
+        {
+            Console.WriteLine(entry);
+        }
     }
 
-    public override void DisplayResult(string name, int square)
+    public void SaveToFile(string filename)
     {
-        Console.WriteLine($"{name}, the square of your number is {square}");
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            foreach (var entry in Entries)
+            {
+                writer.WriteLine($"{entry.Prompt}~|~{entry.Response}~|~{entry.Date}");
+            }
+        }
+    }
+
+    public void LoadFromFile(string filename)
+    {
+        Entries.Clear();
+        using (StreamReader reader = new StreamReader(filename))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                var parts = line.Split(new string[] { "~|~" }, StringSplitOptions.None);
+                if (parts.Length == 3)
+                {
+                    AddEntry(new Entry(parts[0], parts[1]) { Date = parts[2] });
+                }
+            }
+        }
     }
 }
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        UserInteraction userInteraction = new ConsoleUserInteraction();
+        Journal journal = new Journal();
+        string userInput;
 
-        userInteraction.DisplayWelcomeMessage();
+        do
+        {
+            Console.WriteLine("\nJournal Menu:");
+            Console.WriteLine("1. Write a new entry");
+            Console.WriteLine("2. Display journal");
+            Console.WriteLine("3. Save journal to file");
+            Console.WriteLine("4. Load journal from file");
+            Console.WriteLine("5. Exit");
+            Console.Write("Choose an option: ");
+            userInput = Console.ReadLine();
 
-        string userName = userInteraction.PromptUserName();
-        int userNumber = userInteraction.PromptUserNumber();
+            switch (userInput)
+            {
+                case "1":
+                    var random = new Random();
+                    var prompt = journal.Prompts[random.Next(journal.Prompts.Count)];
+                    Console.WriteLine($"Prompt: {prompt}");
+                    Console.Write("Your Response: ");
+                    var response = Console.ReadLine();
+                    journal.AddEntry(new Entry(prompt, response));
+                    break;
 
-        int squaredNumber = SquareNumber(userNumber);
+                case "2":
+                    journal.DisplayEntries();
+                    break;
 
-        userInteraction.DisplayResult(userName, squaredNumber);
-    }
+                case "3":
+                    Console.Write("Enter filename to save: ");
+                    var saveFilename = Console.ReadLine();
+                    journal.SaveToFile(saveFilename);
+                    break;
 
-    static int SquareNumber(int number)
-    {
-        return number * number;
+                case "4":
+                    Console.Write("Enter filename to load: ");
+                    var loadFilename = Console.ReadLine();
+                    journal.LoadFromFile(loadFilename);
+                    break;
+            }
+
+        } while (userInput != "5");
     }
 }

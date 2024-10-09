@@ -9,17 +9,19 @@ class Entry // This Class has properties for the prompt, response, and date.
     public string Prompt { get; set; } //get the prompt and then set it as the prompt variable
     public string Response { get; set; }
     public string Date { get; set; }
+    public string Location {get; set; }//adding location as a string to the program
 
-    public Entry(string prompt, string response)
+    public Entry(string prompt, string response, string location = "")
     {
         Prompt = prompt; ; // essentially a collection of strings that the user will be prompted with when creating a new entry
         Response = response; // make sure they are actually able to respond and there is a variable to store the response in
-        Date = DateTime.Now.ToString("yyyy-MM-dd"); //I want the format to be specified this way
+        Date = DateTime.Now.ToString("yyyy-MM-dd"); //I want the format to be specified this way and be converted to a string
+        Location = location; //identify location
     }
 
     public override string ToString() //overrides the standards code to produce this format
     {
-        return $"{Date} | {Prompt} | {Response}"; //returns the three things in a specific order once the response is received from the user
+        return $"{Date} | {Prompt} | {Response} | Location: {Location}"; //returns the four things in a specific order once the response is received from the user
     }
 }
 
@@ -72,7 +74,7 @@ class Journal
         {
             foreach (var entry in Entries)
             {
-                writer.WriteLine($"{entry.Prompt}~|~{entry.Response}~|~{entry.Date}");
+                writer.WriteLine($"{entry.Prompt}~|~{entry.Response}~|~{entry.Date}~|~{entry.Location}"); //Dillemeter
             }
             //stores each entry in this order in the save file
         }
@@ -90,9 +92,9 @@ class Journal
             //you have to split line into several parts and then add new entry to the console based on the entry the user chose
             {
                 var parts = line.Split(new string[] { "~|~" }, StringSplitOptions.None);
-                if (parts.Length == 3)
+                if (parts.Length == 4)
                 {
-                    AddEntry(new Entry(parts[0], parts[1]) { Date = parts[2] });
+                    AddEntry(new Entry(parts[0], parts[1], parts[3]) { Date = parts[2] });
                 }
             }
         }
@@ -111,12 +113,12 @@ class Program // this class holds the actual program itself
 
         do
         {
-            Console.WriteLine("\nJournal Menu:");
-            Console.WriteLine("1. Write a new entry");
-            Console.WriteLine("2. Display journal");
+            Console.WriteLine("\n Welcome to the Journal Menu! Here are your options:");
+            Console.WriteLine("1. Create a new entry");
+            Console.WriteLine("2. Display journal entries");
             Console.WriteLine("3. Save journal to file");
             Console.WriteLine("4. Load journal from file");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Exit Program");
             Console.Write("Choose an option: ");
             userInput = Console.ReadLine();
   //when the user inputs info, read it and shove it through the switch statement
@@ -128,8 +130,10 @@ class Program // this class holds the actual program itself
                     Console.WriteLine($"Prompt: {prompt}");
                     Console.Write("Your Response: ");
                     var response = Console.ReadLine();
-                    journal.AddEntry(new Entry(prompt, response));
-                    break;
+                    Console.Write("Enter Location (optional): "); //adds location into the console
+                    var location = Console.ReadLine();
+                    journal.AddEntry(new Entry(prompt, response, location)); // add all the variable so it can be stored in the new entry.
+                    break; //Pass all the parameters
 
                 case "2":
                     journal.DisplayEntries();
