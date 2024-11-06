@@ -5,7 +5,7 @@ class ListingActivity
         Console.WriteLine("\nStarting Listing Activity...");
         Console.WriteLine("List things that make you happy (type 'done' to finish):");
 
-        string[] items = new string[10]; // Fixed-size array for simplicity
+        string[] items = new string[10]; 
         int count = 0;
 
         while (count < items.Length)

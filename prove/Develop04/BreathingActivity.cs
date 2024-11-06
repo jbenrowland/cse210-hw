@@ -3,13 +3,13 @@ class BreathingActivity
     public void Run()
     {
         Console.WriteLine("\nStarting Breathing Activity...");
-        for (int i = 0; i < 3; i++) // Loop for a few cycles
+        for (int i = 0; i < 3; i++) 
         {
             Console.Write("Breathe in...");
-            Delay(3); // 3-second delay
+            Delay(3); 
             Console.Write("\rBreathe out...");
-            Delay(3); // 3-second delay
-            Console.WriteLine("\r                      \r"); // Clear line for next cycle
+            Delay(3); 
+            Console.WriteLine("\r                      \r"); 
         }
         Console.WriteLine("Breathing activity complete.");
     }

@@ -10,12 +10,12 @@ class ReflectionActivity
             "What brings you joy?"
         };
 
-        // Select a question based on the current second
+        
         int questionIndex = DateTime.Now.Second % questions.Length;
         string question = questions[questionIndex];
 
         Console.WriteLine($"Reflect on this question: {question}");
-        Delay(5); // 5-second delay
+        Delay(5); 
         Console.WriteLine("Reflection activity complete.");
     }
 
