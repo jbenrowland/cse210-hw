@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // Create a list of sample scriptures
-        var scriptures = new List<Scripture>
+        var scriptures = new Scripture[]
         {
             new Scripture(new Reference("Proverbs 3:5-6"),
                 "Trust in the Lord with all your heart, " +
@@ -28,9 +25,8 @@ class Program
                 "to those who are the called according to His purpose.")
         };
 
-        // Select a random scripture
         Random random = new Random();
-        var scripture = scriptures[random.Next(scriptures.Count)];
+        var scripture = scriptures[random.Next(scriptures.Length)];
 
         while (true)
         {
@@ -46,66 +42,5 @@ class Program
         }
 
         Console.WriteLine("Thanks for using the Scripture Memorizer!");
-    }
-}
-
-class Scripture
-{
-    private Reference Reference { get; }
-    private List<Word> Words { get; set; }
-
-    public Scripture(Reference reference, string text)
-    {
-        Reference = reference;
-        Words = text.Split(' ').Select(word => new Word(word)).ToList();
-    }
-
-    public void Display()
-    {
-        Console.WriteLine($"{Reference.GetReference()}");
-        Console.WriteLine(string.Join(" ", Words.Select(w => w.IsHidden ? "_____" : w.Text)));
-    }
-
-    public void HideRandomWords()
-    {
-        var visibleWords = Words.Where(w => !w.IsHidden).ToList();
-        if (visibleWords.Count > 0)
-        {
-            Random random = new Random();
-            int index = random.Next(visibleWords.Count);
-            visibleWords[index].Hide();
-        }
-    }
-}
-
-class Reference
-{
-    public string ReferenceText { get; }
-
-    public Reference(string referenceText)
-    {
-        ReferenceText = referenceText;
-    }
-
-    public string GetReference()
-    {
-        return ReferenceText;
-    }
-}
-
-class Word
-{
-    public string Text { get; }
-    public bool IsHidden { get; private set; }
-
-    public Word(string text)
-    {
-        Text = text;
-        IsHidden = false;
-    }
-
-    public void Hide()
-    {
-        IsHidden = true;
     }
 }
