@@ -4,9 +4,9 @@ class Program
 {
     static void Main()
     {
-        Journal journal = new Journal(5);  
+        Journal journal = new Journal(5);
         string userInput;
-        string savedEntries = string.Empty;  
+        string savedEntries = string.Empty;
 
         do
         {
@@ -15,7 +15,8 @@ class Program
             Console.WriteLine("2. Display journal entries");
             Console.WriteLine("3. Save Journal");
             Console.WriteLine("4. Load Journal");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Delete an entry");
+            Console.WriteLine("6. Exit");
             Console.Write("Choose an option: ");
             userInput = Console.ReadLine();
 
@@ -51,7 +52,22 @@ class Program
                     }
                     break;
 
-                case "5":
+                case "5": //I added a delete entry option in order to show creativity on this assignment
+                    Console.WriteLine("Select an entry to delete:");
+                    journal.DisplayEntries();
+                    Console.Write("Enter the number of the entry to delete (or 0 to cancel): ");
+                    int deleteIndex;
+                    if (int.TryParse(Console.ReadLine(), out deleteIndex) && deleteIndex > 0 && deleteIndex <= journal.GetEntryCount())
+                    {
+                        journal.DeleteEntry(deleteIndex - 1); // Adjust for 0-based index
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice or operation cancelled.");
+                    }
+                    break;
+
+                case "6":
                     Console.WriteLine("Exiting the program. Goodbye!");
                     break;
 
@@ -60,6 +76,6 @@ class Program
                     break;
             }
 
-        } while (userInput != "5");
+        } while (userInput != "6");
     }
 }

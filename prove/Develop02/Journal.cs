@@ -36,23 +36,24 @@ class Journal
             Console.WriteLine("Journal is full.");
         }
     }
-
-    public void DisplayEntries()
+   public void DisplayEntries()
+{
+    if (entryCount == 0)
     {
-        if (entryCount == 0)
-        {
-            Console.WriteLine("No entries to display.");
-            return;
-        }
-
-        for (int i = 0; i < entryCount; i++)
-        {
-            Console.WriteLine($"Prompt: {entries[i].GetPrompt()}");
-            Console.WriteLine($"Response: {entries[i].GetResponse()}");
-            Console.WriteLine($"Location: {entries[i].GetLocation()}");
-            Console.WriteLine($"Date: {entries[i].GetDate()}");
-        }
+        Console.WriteLine("No entries to display.");
+        return;
     }
+
+    for (int i = 0; i < entryCount; i++)
+    {
+        Console.WriteLine($"{i + 1}. {entries[i].GetPrompt()}");
+        Console.WriteLine($"   Response: {entries[i].GetResponse()}");
+        Console.WriteLine($"   Location: {entries[i].GetLocation()}");
+        Console.WriteLine($"   Date: {entries[i].GetDate()}");
+        Console.WriteLine();
+    }
+    
+}
 
     public string SaveToString()
     {
@@ -83,4 +84,24 @@ class Journal
         Console.WriteLine("Entries loaded.");
         DisplayEntries(); 
     }
+     public int GetEntryCount()
+    {
+        return entryCount;
+    }
+    public void DeleteEntry(int index)
+{
+    if (index >= 0 && index < entryCount)
+    {
+        for (int i = index; i < entryCount - 1; i++)
+        {
+            entries[i] = entries[i + 1]; // Shift entries to the left
+        }
+        entries[--entryCount] = null; // Clear the last entry
+        Console.WriteLine("Entry deleted.");
+    }
+    else
+    {
+        Console.WriteLine("Invalid index. Entry could not be deleted.");
+    }
+}
 }
