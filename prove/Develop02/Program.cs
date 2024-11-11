@@ -12,7 +12,7 @@ class Program
             Console.WriteLine("\nWelcome to the Journal Menu! Here are your options:");
             Console.WriteLine("1. Create a new entry");
             Console.WriteLine("2. Display journal entries");
-            Console.WriteLine("3. Exit Program");
+            Console.WriteLine("3. Exit Program"); 
             Console.Write("Choose an option: ");
             userInput = Console.ReadLine();
 
