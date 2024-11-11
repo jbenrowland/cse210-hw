@@ -29,11 +29,11 @@ class Journal
         if (entryCount < entries.Length)
         {
             entries[entryCount++] = entry;
-            Console.WriteLine("Entry added successfully.");
+            Console.WriteLine("Entry added.");
         }
         else
         {
-            Console.WriteLine("Journal is full. No more entries can be added.");
+            Console.WriteLine("Journal is full.");
         }
     }
 
@@ -47,11 +47,40 @@ class Journal
 
         for (int i = 0; i < entryCount; i++)
         {
-            Console.WriteLine($"\nDate: {entries[i].Date}");
-            Console.WriteLine($"Prompt: {entries[i].Prompt}");
-            Console.WriteLine($"Response: {entries[i].Response}");
-            if (!string.IsNullOrWhiteSpace(entries[i].Location))
-                Console.WriteLine($"Location: {entries[i].Location}");
+            Console.WriteLine($"Prompt: {entries[i].GetPrompt()}");
+            Console.WriteLine($"Response: {entries[i].GetResponse()}");
+            Console.WriteLine($"Location: {entries[i].GetLocation()}");
+            Console.WriteLine($"Date: {entries[i].GetDate()}");
         }
+    }
+
+    public string SaveToString()
+    {
+        string savedEntries = string.Empty;
+        for (int i = 0; i < entryCount; i++)
+        {
+            savedEntries += entries[i].ToString() + "\n";
+        }
+        return savedEntries.Trim();  
+    }
+    public void LoadFromString(string savedEntries)
+    {
+        entries = new Entry[entries.Length];  
+        entryCount = 0;
+
+        
+        string[] entryStrings = savedEntries.Split('\n');
+
+ 
+        foreach (var entryString in entryStrings)
+        {
+            Entry entry = Entry.FromString(entryString);
+            if (entry != null && entryCount < entries.Length)
+            {
+                entries[entryCount++] = entry;
+            }
+        }
+        Console.WriteLine("Entries loaded.");
+        DisplayEntries(); 
     }
 }
