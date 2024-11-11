@@ -94,9 +94,9 @@ class Journal
     {
         for (int i = index; i < entryCount - 1; i++)
         {
-            entries[i] = entries[i + 1]; // Shift entries to the left
+            entries[i] = entries[i + 1]; 
         }
-        entries[--entryCount] = null; // Clear the last entry
+        entries[--entryCount] = null; 
         Console.WriteLine("Entry deleted.");
     }
     else

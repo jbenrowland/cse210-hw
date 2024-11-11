@@ -59,7 +59,7 @@ class Program
                     int deleteIndex;
                     if (int.TryParse(Console.ReadLine(), out deleteIndex) && deleteIndex > 0 && deleteIndex <= journal.GetEntryCount())
                     {
-                        journal.DeleteEntry(deleteIndex - 1); // Adjust for 0-based index
+                        journal.DeleteEntry(deleteIndex - 1); 
                     }
                     else
                     {
