@@ -37,11 +37,23 @@ class Program
                     break;
 
                 case "3":
+                    Console.Write("Please type a filename to save your entries to:");
+                    string filename = Console.ReadLine();
                     savedEntries = journal.SaveToString();
+                    using (StreamWriter outputFile = new StreamWriter(filename))
+                    {
+                        outputFile.WriteLine(savedEntries);
+                    }
                     Console.WriteLine("Journal entries saved.");
+
                     break;
 
                 case "4":
+                    Console.Write("Please put in your filename:");
+                    filename = Console.ReadLine();
+                    string[] lines = System.IO.File.ReadAllLines(filename);
+                    savedEntries = string.Join("\n",lines); 
+                    
                     if (string.IsNullOrEmpty(savedEntries))
                     {
                         Console.WriteLine("No saved journal entries to load.");
