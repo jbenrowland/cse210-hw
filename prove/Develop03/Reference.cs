@@ -1,9 +1,12 @@
 class Reference
 {
-    public string Text { get; }
-
+    private string _text;
     public Reference(string text)
     {
-        Text = text;
+        _text = text;
+    }
+    public string GetText()
+    {
+        return _text;
     }
 }

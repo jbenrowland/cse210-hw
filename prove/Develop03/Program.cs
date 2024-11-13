@@ -1,10 +1,9 @@
 using System;
-
 class Program
 {
     static void Main(string[] args)
     {
-        var scriptures = new Scripture[]
+        Scripture[] scriptures = new Scripture[]
         {
             new Scripture(new Reference("Proverbs 3:5-6"),
                 "Trust in the Lord with all your heart, " +
@@ -24,23 +23,30 @@ class Program
                 "And we know that all things work together for good to those who love God, " +
                 "to those who are the called according to His purpose.")
         };
-
         Random random = new Random();
-        var scripture = scriptures[random.Next(scriptures.Length)];
-
         while (true)
         {
+            //I added this part to exceed requirements, having the program work with a library of scriptyures rather than a single one, 
+            //and it chooses a scripture at random.
+            Scripture scripture = scriptures[random.Next(scriptures.Length)];
             Console.Clear();
             scripture.Display();
             Console.WriteLine("\nPress Enter to hide words, or type 'quit' to exit.");
 
             string input = Console.ReadLine();
-            if (input?.ToLower() == "quit")
+            if (input != null && input.ToLower() == "quit")
+            {
                 break;
-
-            scripture.HideRandomWords();
+            }
+            scripture.HideRandomWords();            
+            if (scripture.AllWordsHidden())
+            {
+                Console.Clear();
+                scripture.Display();
+                Console.WriteLine("\nAll words have been hidden. The program will now exit.");
+                break;
+            }
         }
-
         Console.WriteLine("Thanks for using the Scripture Memorizer!");
     }
 }

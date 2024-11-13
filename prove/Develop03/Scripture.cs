@@ -1,36 +1,65 @@
 class Scripture
 {
-    private readonly Reference _reference;
-    private readonly List<string> _words;
-    private readonly HashSet<int> _hiddenWordIndices;
-    private readonly Random _random;
-
+    private Reference _reference;
+    private string[] _words;
+    private bool[] _hiddenWords;
+    private Random _random;
+    
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
-        _words = text.Split(' ').ToList();
-        _hiddenWordIndices = new HashSet<int>();
+        _words = text.Split(' ');
+        _hiddenWords = new bool[_words.Length];
         _random = new Random();
     }
-
     public void Display()
     {
-        Console.WriteLine(_reference.Text);
-        Console.WriteLine(string.Join(" ", _words.Select((word, index) =>
-            _hiddenWordIndices.Contains(index) ? "_____" : word)));
+        Console.WriteLine(_reference.GetText());
+        for (int i = 0; i < _words.Length; i++)
+        {
+            if (_hiddenWords[i])
+            {
+                Console.Write("_____ ");
+            }
+            else
+            {
+                Console.Write(_words[i] + " ");
+            }
+        }
+        Console.WriteLine();
     }
-
+    public bool AllWordsHidden()
+    {
+        for (int i = 0; i < _hiddenWords.Length; i++)
+        {
+            if (!_hiddenWords[i])
+            {
+                return false; 
+            }
+        }
+        return true; 
+    }
     public void HideRandomWords()
     {
-        if (_hiddenWordIndices.Count < _words.Count)
+        bool allHidden = true;
+        for (int i = 0; i < _hiddenWords.Length; i++)
+        {
+            if (!_hiddenWords[i])
+            {
+                allHidden = false;
+                break;
+            }
+        }
+        if (!allHidden)
         {
             int index;
             do
             {
-                index = _random.Next(_words.Count);
-            } while (_hiddenWordIndices.Contains(index));
+                index = _random.Next(_words.Length);
+            }
+            while (_hiddenWords[index]);
 
-            _hiddenWordIndices.Add(index);
+            _hiddenWords[index] = true;
         }
     }
 }
