@@ -8,7 +8,7 @@ class Program
         string userInput;
         string savedEntries = string.Empty;
 
-        do
+    
         {
             Console.WriteLine("\nJournal Menu:");
             Console.WriteLine("1. Create a new entry");

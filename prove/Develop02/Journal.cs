@@ -20,7 +20,7 @@ class Journal
 
     public string GetRandomPrompt()
     {
-        var random = new Random();
+        Random random = new Random();
         return prompts[random.Next(prompts.Length)];
     }
 
@@ -73,7 +73,7 @@ class Journal
         string[] entryStrings = savedEntries.Split('\n');
 
  
-        foreach (var entryString in entryStrings)
+        foreach (String entryString in entryStrings)
         {
             Entry entry = Entry.FromString(entryString);
             if (entry != null && entryCount < entries.Length)

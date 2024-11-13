@@ -24,7 +24,8 @@ class Entry
     }
     public static Entry FromString(string entryString)
     {
-        var parts = entryString.Split('|');
+        String[] parts = entryString.Split('|');
+
         if (parts.Length != 4)
         {
             return null;
