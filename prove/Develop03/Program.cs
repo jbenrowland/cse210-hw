@@ -26,7 +26,7 @@ class Program
         Random random = new Random();
         while (true)
         {
-            //I added this part to exceed requirements, having the program work with a library of scriptyures rather than a single one, 
+            //I added this part to exceed requirements, having the program work with a library of scriptures rather than a single one, 
             //and it chooses a scripture at random.
             Scripture scripture = scriptures[random.Next(scriptures.Length)];
             Console.Clear();
