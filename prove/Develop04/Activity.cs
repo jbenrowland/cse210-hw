@@ -28,7 +28,7 @@ public class Activity
         while (Environment.TickCount < end)
         {
             Console.Write("...");
-            System.Threading.Thread.Sleep(500);
+            Thread.Sleep(500);
         }
         Console.WriteLine();
     }
@@ -37,7 +37,7 @@ public class Activity
         for (int i = seconds; i > 0; i--)
         {
             Console.Write(i + "...\r");
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
         }
         Console.WriteLine();
     }

@@ -1,7 +1,7 @@
 using System;
 
 class Program
-{
+{ // I added this part to exceed requirements by keeping a lof of how many times activities were performed
 static int breathingCount = 0;
 static int reflectionCount = 0;
 static int listingCount = 0;
