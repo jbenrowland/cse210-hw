@@ -1,23 +1,43 @@
 class ReflectionActivity : Activity
+{
+    private string[] prompts = {
+        "Think of a time when you stood up for someone else.",
+        "Think of a time when you did something really difficult.",
+        "Think of a time when you helped someone in need.",
+        "Think of a time when you did something truly selfless."
+    };
+
+    private string[] questions = {
+        "Why was this experience meaningful to you?",
+        "Have you ever done anything like this before?",
+        "How did you get started?",
+        "How did you feel when it was complete?",
+        "What made this time different than other times?",
+        "What is your favorite thing about this experience?"
+    };
+
+    public ReflectionActivity()
     {
-        public ReflectionActivity() : base("Reflection Activity", "Reflect on a question to deepen your thoughts.", 5)
-        { }
+        name = "Reflection Activity";
+        description = "This activity helps you reflect on times when you showed strength and resilience.";
+    }
 
-        public override void Run()
+    public void Perform()
+    {
+        Start();
+        Random random = new Random();
+        int elapsed = 0;
+
+        Console.WriteLine(prompts[random.Next(prompts.Length)]);
+        DisplayAnimation(3);
+
+        while (elapsed < duration)
         {
-            base.Run();
-            string[] questions = {
-                "What are you grateful for today?",
-                "What challenges did you overcome recently?",
-                "What brings you joy?"
-            };
-
-            int questionIndex = DateTime.Now.Second % questions.Length;
-            string question = questions[questionIndex];
-
-            Console.WriteLine($"Reflect on this question: {question}");
-            Delay(Duration);
-            Console.WriteLine("Reflection activity complete.");
+            Console.WriteLine(questions[random.Next(questions.Length)]);
+            DisplayAnimation(3);
+            elapsed += 3;
         }
+
+        End();
     }
 }
