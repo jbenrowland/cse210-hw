@@ -1,13 +1,13 @@
 class ReflectionActivity : Activity
 {
-    private string[] prompts = {
+    private string[] _prompts = {
         "Think of a time when you stood up for someone else.",
         "Think of a time when you did something really difficult.",
         "Think of a time when you helped someone in need.",
         "Think of a time when you did something truly selfless."
     };
 
-    private string[] questions = {
+    private string[] _questions = {
         "Why was this experience meaningful to you?",
         "Have you ever done anything like this before?",
         "How did you get started?",
@@ -15,29 +15,24 @@ class ReflectionActivity : Activity
         "What made this time different than other times?",
         "What is your favorite thing about this experience?"
     };
-
-    public ReflectionActivity()
+    public ReflectionActivity() 
+        : base("Reflection Activity", "This activity helps you reflect on times when you showed strength and resilience.")
     {
-        name = "Reflection Activity";
-        description = "This activity helps you reflect on times when you showed strength and resilience.";
     }
-
     public void Perform()
     {
-        Start();
+        Start();  
         Random random = new Random();
         int elapsed = 0;
-
-        Console.WriteLine(prompts[random.Next(prompts.Length)]);
+        Console.WriteLine(_prompts[random.Next(_prompts.Length)]);
         DisplayAnimation(3);
-
-        while (elapsed < duration)
+        while (elapsed < _duration)
         {
-            Console.WriteLine(questions[random.Next(questions.Length)]);
-            DisplayAnimation(3);
-            elapsed += 3;
+            Console.WriteLine(_questions[random.Next(_questions.Length)]);
+            DisplayAnimation(3); 
+            elapsed += 3;  
         }
 
-        End();
+        End();  
     }
 }

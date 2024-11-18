@@ -1,7 +1,7 @@
 using System;
 
 class Program
-{ //added an integer tracker to see what the count is at to exceed the requirements
+{
 static int breathingCount = 0;
 static int reflectionCount = 0;
 static int listingCount = 0;
