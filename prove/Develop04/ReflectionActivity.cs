@@ -1,27 +1,23 @@
-class ReflectionActivity
-{
-    public void Run()
+class ReflectionActivity : Activity
     {
-        Console.WriteLine("\nStarting Reflection Activity...");
-        
-        string[] questions = {
-            "What are you grateful for today?",
-            "What challenges did you overcome recently?",
-            "What brings you joy?"
-        };
+        public ReflectionActivity() : base("Reflection Activity", "Reflect on a question to deepen your thoughts.", 5)
+        { }
 
-        
-        int questionIndex = DateTime.Now.Second % questions.Length;
-        string question = questions[questionIndex];
+        public override void Run()
+        {
+            base.Run();
+            string[] questions = {
+                "What are you grateful for today?",
+                "What challenges did you overcome recently?",
+                "What brings you joy?"
+            };
 
-        Console.WriteLine($"Reflect on this question: {question}");
-        Delay(5); 
-        Console.WriteLine("Reflection activity complete.");
-    }
+            int questionIndex = DateTime.Now.Second % questions.Length;
+            string question = questions[questionIndex];
 
-    private void Delay(int seconds)
-    {
-        int end = Environment.TickCount + (seconds * 1000);
-        while (Environment.TickCount < end) { }
+            Console.WriteLine($"Reflect on this question: {question}");
+            Delay(Duration);
+            Console.WriteLine("Reflection activity complete.");
+        }
     }
 }

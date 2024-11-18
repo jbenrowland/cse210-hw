@@ -1,29 +1,30 @@
-class ListingActivity
-{
-    public void Run()
+class ListingActivity : Activity
     {
-        Console.WriteLine("\nStarting Listing Activity...");
-        Console.WriteLine("List things that make you happy (type 'done' to finish):");
+        public ListingActivity() : base("Listing Activity", "List things that make you happy. Type 'done' to finish.", 10)
+        { }
 
-        string[] items = new string[10]; 
-        int count = 0;
-
-        while (count < items.Length)
+        public override void Run()
         {
-            Console.Write("Enter item: ");
-            string item = Console.ReadLine();
+            base.Run();
+            string[] items = new string[10];
+            int count = 0;
 
-            if (item.ToLower() == "done") break;
+            while (count < items.Length)
+            {
+                Console.Write("Enter item: ");
+                string item = Console.ReadLine();
 
-            items[count] = item;
-            count++;
+                if (item.ToLower() == "done") break;
+
+                items[count] = item;
+                count++;
+            }
+
+            Console.WriteLine("\nYou listed:");
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine("- " + items[i]);
+            }
+            Console.WriteLine("Listing activity complete.");
         }
-
-        Console.WriteLine("\nYou listed:");
-        for (int i = 0; i < count; i++)
-        {
-            Console.WriteLine("- " + items[i]);
-        }
-        Console.WriteLine("Listing activity complete.");
     }
-}
