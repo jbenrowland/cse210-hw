@@ -7,6 +7,7 @@ class ReflectionActivity : Activity
         "Think of a time when you did something truly selfless."
     };
 
+
     private string[] _questions = {
         "Why was this experience meaningful to you?",
         "Have you ever done anything like this before?",
