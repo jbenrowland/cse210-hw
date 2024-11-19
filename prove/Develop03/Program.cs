@@ -1,4 +1,5 @@
 using System;
+
 class Program
 {
     static void Main(string[] args)
@@ -23,30 +24,31 @@ class Program
                 "And we know that all things work together for good to those who love God, " +
                 "to those who are the called according to His purpose.")
         };
+        // I added this to exceed requirements by randomizing which scripture it would choose to memorize from the list
         Random random = new Random();
+        Scripture currentScripture = scriptures[random.Next(scriptures.Length)];
+
         while (true)
         {
-            //I added this part to exceed requirements, having the program work with a library of scriptures rather than a single one, 
-            //and it chooses a scripture at random.
-            Scripture scripture = scriptures[random.Next(scriptures.Length)];
             Console.Clear();
-            scripture.Display();
-            Console.WriteLine("\nPress Enter to hide words, or type 'quit' to exit.");
+            currentScripture.Display();
 
+            if (currentScripture.AllWordsHidden())
+            {
+                Console.WriteLine("\nAll words have been hidden. The program will now exit.");
+                break;
+            }
+
+            Console.WriteLine("\nPress Enter to hide a random word, or type 'quit' to exit.");
             string input = Console.ReadLine();
             if (input != null && input.ToLower() == "quit")
             {
                 break;
             }
-            scripture.HideRandomWords();            
-            if (scripture.AllWordsHidden())
-            {
-                Console.Clear();
-                scripture.Display();
-                Console.WriteLine("\nAll words have been hidden. The program will now exit.");
-                break;
-            }
+
+            currentScripture.HideRandomWord();
         }
+
         Console.WriteLine("Thanks for using the Scripture Memorizer!");
     }
 }
