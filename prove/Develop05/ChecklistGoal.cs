@@ -17,10 +17,10 @@ class ChecklistGoal : Goal
         _timesCompleted++;
         if (_timesCompleted >= _targetCount)
         {
-            IsCompleted = true; // Set IsCompleted to true when target is reached
-            return _points + _bonusPoints; // Return points with bonus when completed
+            IsCompleted = true; 
+            return _points + _bonusPoints; 
         }
-        return _points; // Return only points if not completed yet
+        return _points; 
     }
 
     public override string GetStatus()

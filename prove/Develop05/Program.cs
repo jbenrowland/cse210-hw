@@ -5,7 +5,7 @@ class Program
     private static int _totalScore = 0;
     private static Goal[] _goals = new Goal[10];
     private static int _goalCount = 0;
-    private static string _savedGoalsData = "";  // Simulated "file" data as a string
+    private static string _savedGoalsData = "";  
 
     static void Main()
     {
@@ -110,14 +110,10 @@ class Program
 
     static void SaveGoals()
     {
-        // Clear the simulated storage before saving
         _savedGoalsData = "";
-
-        // Save each goal in a simple serialized format
         for (int i = 0; i < _goalCount; i++)
         {
             Goal goal = _goals[i];
-            // Save goal type, info, points, and IsCompleted
             string goalData = goal.GetType().Name + "|" + goal.GetInfo() + "|" + goal.GetPoints() + "|" + goal.IsCompleted;
             _savedGoalsData += goalData + "\n";
         }
@@ -127,14 +123,11 @@ class Program
 
     static void LoadGoals()
     {
-        // If there is no saved data, notify the user.
         if (string.IsNullOrEmpty(_savedGoalsData))
         {
             Console.WriteLine("No saved goals found.");
             return;
         }
-
-        // Split the saved data into lines
         string[] lines = _savedGoalsData.Split('\n');
         foreach (string line in lines)
         {
@@ -146,8 +139,6 @@ class Program
                 string goalDescription = goalData[2];
                 int goalPoints = int.Parse(goalData[3]);
                 bool isCompleted = bool.Parse(goalData[4]);
-
-                // Create goals based on their type and load the data
                 if (goalType == "SimpleGoal")
                 {
                     _goals[_goalCount++] = new SimpleGoal(goalName, goalDescription, goalPoints) { IsCompleted = isCompleted };
@@ -158,8 +149,7 @@ class Program
                 }
                 else if (goalType == "ChecklistGoal")
                 {
-                    // For ChecklistGoal, we assume there's more data, but this is simplified
-                    _goals[_goalCount++] = new ChecklistGoal(goalName, goalDescription, goalPoints, 5, 10) { IsCompleted = isCompleted }; // Example values for targetCount and bonusPoints
+                    _goals[_goalCount++] = new ChecklistGoal(goalName, goalDescription, goalPoints, 5, 10) { IsCompleted = isCompleted };
                 }
             }
         }

@@ -7,11 +7,10 @@ class EternalGoal : Goal
 
     public override int RecordEvent()
     {
-        // For eternal goals, you can allow multiple recordings
         if (!IsCompleted) 
         {
-            return _points;  // Always returns points, but doesn't mark as completed
+            return _points;  
         }
-        return 0;  // No points after it's marked completed
+        return 0;  
     }
 }

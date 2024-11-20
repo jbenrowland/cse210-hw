@@ -10,20 +10,16 @@ class Goal
         _name = name;
         _description = description;
         _points = points;
-        _isCompleted = false;  // Initialize IsCompleted to false by default
+        _isCompleted = false; 
     }
-
-    // Property for IsCompleted
     public bool IsCompleted
     {
         get { return _isCompleted; }
         set { _isCompleted = value; }
     }
-
-    // This method can be overridden by subclasses if needed
     public virtual int RecordEvent()
     {
-        _isCompleted = true; // Mark the goal as completed for simplicity
+        _isCompleted = true; 
         return _points;
     }
 
@@ -41,6 +37,4 @@ class Goal
     {
         return _points;
     }
-
-    // You can remove GetIsCompleted as you are using the IsCompleted property directly
 }
