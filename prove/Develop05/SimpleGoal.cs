@@ -4,7 +4,6 @@ class SimpleGoal : Goal
         : base(name, description, points)
     {
     }
-
     public override int RecordEvent()
     {
         if (!IsCompleted)

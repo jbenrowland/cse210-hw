@@ -3,7 +3,6 @@ class ChecklistGoal : Goal
     private int _timesCompleted;
     private int _targetCount;
     private int _bonusPoints;
-
     public ChecklistGoal(string name, string description, int points, int targetCount, int bonusPoints)
         : base(name, description, points)
     {
@@ -11,7 +10,6 @@ class ChecklistGoal : Goal
         _targetCount = targetCount;
         _bonusPoints = bonusPoints;
     }
-
     public override int RecordEvent()
     {
         _timesCompleted++;
@@ -22,7 +20,6 @@ class ChecklistGoal : Goal
         }
         return _points; 
     }
-
     public override string GetStatus()
     {
         return $"{base.GetStatus()} Completed {_timesCompleted}/{_targetCount} times";

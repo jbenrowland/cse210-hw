@@ -6,7 +6,6 @@ class Program
     private static Goal[] _goals = new Goal[10];
     private static int _goalCount = 0;
     private static string _savedGoalsData = "";  
-
     static void Main()
     {
         int choice;
@@ -46,7 +45,6 @@ class Program
             }
         } while (choice != 7);
     }
-
     static void CreateGoal()
     {
         Console.WriteLine("\nSelect Goal Type:");
@@ -80,7 +78,6 @@ class Program
             _goals[_goalCount++] = new ChecklistGoal(name, description, points, targetCount, bonusPoints);
         }
     }
-
     static void RecordGoalEvent()
     {
         Console.WriteLine("\nSelect a goal to record:");
@@ -98,7 +95,6 @@ class Program
             Console.WriteLine("Points earned: " + pointsEarned);
         }
     }
-
     static void DisplayGoals()
     {
         Console.WriteLine("\nYour Goals:");
@@ -107,7 +103,6 @@ class Program
             Console.WriteLine(_goals[i].GetInfo());
         }
     }
-
     static void SaveGoals()
     {
         _savedGoalsData = "";
@@ -120,7 +115,6 @@ class Program
 
         Console.WriteLine("Goals have been saved.");
     }
-
     static void LoadGoals()
     {
         if (string.IsNullOrEmpty(_savedGoalsData))
@@ -153,7 +147,6 @@ class Program
                 }
             }
         }
-
         Console.WriteLine("Goals have been loaded.");
     }
 }

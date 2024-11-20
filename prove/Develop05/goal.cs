@@ -4,7 +4,6 @@ class Goal
     protected string _description;
     protected int _points;
     protected bool _isCompleted;
-
     public Goal(string name, string description, int points)
     {
         _name = name;
@@ -22,17 +21,14 @@ class Goal
         _isCompleted = true; 
         return _points;
     }
-
     public virtual string GetStatus()
     {
         return _isCompleted ? "[X]" : "[ ]";
     }
-
     public virtual string GetInfo()
     {
         return $"{GetStatus()} {_name} ({_description})";
     }
-
     public int GetPoints()
     {
         return _points;
