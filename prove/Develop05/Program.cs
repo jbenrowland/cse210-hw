@@ -1,11 +1,11 @@
 using System;
-
+using System.IO; //For StreamWriter
 class Program
 {
     private static int _totalScore = 0;
     private static Goal[] _goals = new Goal[10];
     private static int _goalCount = 0;
-    private static string _savedGoalsData = "";  
+
     static void Main()
     {
         int choice;
@@ -103,36 +103,59 @@ class Program
             Console.WriteLine(_goals[i].GetInfo());
         }
     }
-    static void SaveGoals()
+static void SaveGoals()
+{
+    Console.Write("Enter filename to save goals: ");
+    string fileName = Console.ReadLine();
+    
+    try
     {
-        _savedGoalsData = "";
-        for (int i = 0; i < _goalCount; i++)
+        using (StreamWriter writer = new StreamWriter(fileName))
         {
-            Goal goal = _goals[i];
-            string goalData = goal.GetType().Name + "|" + goal.GetInfo() + "|" + goal.GetPoints() + "|" + goal.IsCompleted;
-            _savedGoalsData += goalData + "\n";
+            for (int i = 0; i < _goalCount; i++)
+            {
+                Goal goal = _goals[i];
+                string goalData = goal.GetType().Name + "|" + goal.GetInfo() + "|" + goal.GetPoints() + "|" + goal.IsCompleted.ToString();
+                writer.WriteLine(goalData);
+            }
         }
 
-        Console.WriteLine("Goals have been saved.");
+        Console.WriteLine("Goals have been saved to " + fileName);
     }
-    static void LoadGoals()
+    catch (Exception ex)
     {
-        if (string.IsNullOrEmpty(_savedGoalsData))
-        {
-            Console.WriteLine("No saved goals found.");
-            return;
-        }
-        string[] lines = _savedGoalsData.Split('\n');
+        Console.WriteLine("Error saving goals: " + ex.Message);
+    }
+}
+static void LoadGoals()
+{
+    Console.Write("Enter filename to load goals: ");
+    string fileName = Console.ReadLine();
+    
+    try
+    {
+        string[] lines = File.ReadAllLines(fileName);
+        _goalCount = 0; 
+
         foreach (string line in lines)
         {
             if (!string.IsNullOrEmpty(line))
             {
                 string[] goalData = line.Split('|');
+                if (goalData.Length < 5)
+                {
+                    Console.WriteLine($"Skipping invalid goal data: {line}");
+                    continue;
+                }
                 string goalType = goalData[0];
                 string goalName = goalData[1];
                 string goalDescription = goalData[2];
                 int goalPoints = int.Parse(goalData[3]);
-                bool isCompleted = bool.Parse(goalData[4]);
+                bool isCompleted = false;
+                if (!bool.TryParse(goalData[4], out isCompleted))
+                {
+                    Console.WriteLine($"Error parsing IsCompleted for goal '{goalName}'. Setting it to false.");
+                }
                 if (goalType == "SimpleGoal")
                 {
                     _goals[_goalCount++] = new SimpleGoal(goalName, goalDescription, goalPoints) { IsCompleted = isCompleted };
@@ -147,6 +170,12 @@ class Program
                 }
             }
         }
-        Console.WriteLine("Goals have been loaded.");
+
+        Console.WriteLine("Goals have been loaded from " + fileName);
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error loading goals: " + ex.Message);
+    }
+}
 }
